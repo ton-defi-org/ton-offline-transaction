@@ -10,6 +10,7 @@
                 let b64encoded = Uint8ToBase64(pk)
                 
                 document.querySelector('#dl').href = `data:application/octet-stream;charset=utf-8;base64,${b64encoded}`;
+                document.querySelector('#dl').style.display = 'block';
             }
 
             window.addEventListener("load", async ()=> {
@@ -36,12 +37,19 @@
                 return btoa(result);
             }
         </script>
+        <style>
+            body {
+                padding: 20px;
+                font-size: 20px;
+            }
+        </style>
     </head>
     <body>
         <textarea name="" id="words" cols="30" rows="10"></textarea>
-        <button id="load-btn">Load</button>
-        <a href="" id="dl" download="maf.pk">
-            <button id="dl-btn">Download</button>
-        </a>
+        <br>
+        <br>
+        <button id="load-btn">Load 24 word mnemonic</button>
+        <br>
+        <a href="" id="dl" download="maf.pk" style="display: none;">download private key</a>
     </body>
 </html>
