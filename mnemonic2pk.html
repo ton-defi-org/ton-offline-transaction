@@ -1,55 +1,74 @@
 <html>
-    <head>
-        <script src="js/index.js"></script>
-        <script>
-            const tonMnemonic = window.TonWeb.mnemonic;
-            async function loadMemonic(text) {
-
-                
-                let pk = await tonMnemonic.mnemonicToSeed(text);
-                let b64encoded = Uint8ToBase64(pk)
-                
-                document.querySelector('#dl').href = `data:application/octet-stream;charset=utf-8;base64,${b64encoded}`;
-                document.querySelector('#dl').style.display = 'block';
+<head>
+    <script src="js/index.js"></script>
+    <script>
+        const tonMnemonic = window.TonWeb.mnemonic;
+        async function loadMnemonic(text) {
+            
+            
+            let pk = await tonMnemonic.mnemonicToSeed(text);
+            let b64encoded = Uint8ToBase64(pk)
+            
+            document.querySelector('#dl').href = `data:application/octet-stream;charset=utf-8;base64,${b64encoded}`;
+            document.querySelector('#dl').style.display = 'block';
+        }
+        
+        window.addEventListener("load", async ()=> {
+            
+            document.querySelector('#load-btn').addEventListener('click', ()=> {
+                let text = document.querySelector('#words').value.split(' ');
+                loadMnemonic(text);
+            });
+            
+            document.querySelector('#gen-seed-btn').addEventListener('click', async ()=> {
+                const mnemonic = await tonMnemonic.generateMnemonic();    
+                document.querySelector('#words').value = mnemonic.join(' ');    
+            });
+        })
+        
+        function Uint8ToBase64(u8Arr){
+            var CHUNK_SIZE = 0x8000; //arbitrary number
+            var index = 0;
+            var length = u8Arr.length;
+            var result = '';
+            var slice;
+            while (index < length) {
+                slice = u8Arr.subarray(index, Math.min(index + CHUNK_SIZE, length)); 
+                result += String.fromCharCode.apply(null, slice);
+                index += CHUNK_SIZE;
             }
+            return btoa(result);
+        }
+    </script>
+    <style>
+        body {
+            padding: 20px;
+            font-size: 20px;
+        }
+        button {
+            border: 1px solid rgb(105, 105, 105);
+            padding: 6px 10px;
+            margin: 7px;
+            font-size: 18px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mnemonic Tool</h2>
 
-            window.addEventListener("load", async ()=> {
-                // const mnemonic = await tonMnemonic.generateMnemonic();    
-                // document.querySelector('#words').value = mnemonic.join(' ');
-
-                document.querySelector('#load-btn').addEventListener('click', ()=> {
-                    let text = document.querySelector('#words').value.split(' ');
-                    loadMemonic(text);
-                })
-            })
-
-            function Uint8ToBase64(u8Arr){
-                var CHUNK_SIZE = 0x8000; //arbitrary number
-                var index = 0;
-                var length = u8Arr.length;
-                var result = '';
-                var slice;
-                while (index < length) {
-                    slice = u8Arr.subarray(index, Math.min(index + CHUNK_SIZE, length)); 
-                    result += String.fromCharCode.apply(null, slice);
-                    index += CHUNK_SIZE;
-                }
-                return btoa(result);
-            }
-        </script>
-        <style>
-            body {
-                padding: 20px;
-                font-size: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <textarea name="" id="words" cols="30" rows="10"></textarea>
         <br>
+        <button id="gen-seed-btn">Generate Mnemonic</button>
+        <br>
+        <textarea name="" id="words" cols="30" rows="10"></textarea>
         <br>
         <button id="load-btn">Load 24 word mnemonic</button>
         <br>
-        <a href="" id="dl" download="maf.pk" style="display: none;">download private key</a>
-    </body>
+        <a href="" id="dl" download="key.pk" style="display: none;">download private key</a>
+    </div>
+</body>
 </html>
