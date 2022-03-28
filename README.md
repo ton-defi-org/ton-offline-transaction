@@ -23,33 +23,33 @@ This is often achieved through the use of hardware wallets (like Trezor and Ledg
 
 This computer should never be connected to the Internet, so all tools must be installed on it in advance:
 
-* **Build `fift` executable**
+### 1.1. Build `fift` executable
 
   This command line tool is part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=fift) or find a trusted source for pre-built binaries that you can just download and use.
   
-* **Download `fift-lib` library**
+### 1.2. Download `fift-lib` library
   
   This dependency is a standard collection of about 8 fift files. They are part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download the files from https://github.com/newton-blockchain/ton/tree/master/crypto/fift/lib. Set the `fift-lib` directory as the environment variable `FIFTPATH` by running `export FIFTPATH=~/ton/fift-lib`. 
   
-* **Download `wallet-v3.fif`, `new-wallet-v3.fif` and `wallet-v3-code.fif`**
+### 1.3. Download `wallet-v3.fif`, `new-wallet-v3.fif` and `wallet-v3-code.fif`
 
   The TON core team publishes the official template for a wallet smart contract. In the time of writing, the most recent version is wallet V3. The code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download [wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3.fif), [new-wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/new-wallet-v3.fif) and [wallet-v3-code.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3-code.fif) from https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont.
 
-* **Build `tonweb-mnemonic.js` JS library**
+### 1.4. Build `tonweb-mnemonic.js` JS library
 
   This JavaScript library helps manipulate 24 word mnemonics (BIP39) and convert them to functional private keys that can sign TON transactions. The library source code is available [here](https://github.com/toncenter/tonweb-mnemonic). Build it from source code by running `npm install && npm run build:web && cp dist/web/index.js tonweb-mnemonic.js` or find a trusted source for a pre-built version that you can just download and use. 
 
-* **Download `ton-mnemonic-pk.html`**
+### 1.5. Download `ton-mnemonic-pk.html`
 
   This offline HTML relies on `tonweb-mnemonic.js` and provides an easy-to-use interface where you can convert an existing 24 word mnemonic (BIP39) to a 32-byte TON-compatible private key file (`mywallet.pk`). The private key file (`mywallet.pk`) is needed as argument to `fift` executable for signing transactions. The HTML is part of this repo and can be downloaded [here](ton-mnemonic-pk.html).
 
 ## Step 2: Sign deployment offline
 
-* **Ready `mywallet.pk`**
+### 2.1. Ready `mywallet.pk`
 
   The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `mywallet.pk` and save it. Never give any unauthorized party access to `mywallet.pk` as access to this file gives full access to all your funds. Rename this file for convenience to identify your wallet with a meaningful name (`mywallet` will be used as the name throughout this tutorial).
   
-* **Sign deployment**
+### 2.2. Sign deployment
 
   Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <wallet-filename-without-extension>`
   
@@ -73,31 +73,31 @@ This computer should never be connected to the Internet, so all tools must be in
   ```
   The public wallet address in the example output is `kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ`
 
-* **Save `mywallet.addr`**
+### 2.3. Save `mywallet.addr`
 
   The above command will generate an ADDR file which contains the public wallet address. The ADDR file will be created in the current directory with the name `mywallet.addr` (or any other meaningful name you chose for `wallet-filename-without-extension` above). Store the ADDR file for future use, it will be required for signing transfer transactions. This file is not secret, so it does not need heavy protection.
 
-* **See output BOC**
+### 2.4. See output BOC
 
   The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `mywallet-query.boc` (or any other meaningful name you chose for `wallet-filename-without-extension` above).
   
 ## Step 3: Move BOC and send
 
-* **Move BOC**
+### 3.1. Move BOC
 
   The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `mywallet.pk`) get compromised in the process.
   
-* **Fund address**
+### 3.2. Fund address
 
   Send some TON coins to the public wallet address to fund the contract deployment. An amount of 0.1 TON should suffice. The public wallet address appears in the output of the `fift` command in step 2.
   
-* **Prepare `lite-client`**
+### 3.3. Prepare `lite-client`
 
   The lite client command line tool is another part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=lite-client) or find a trusted source for pre-built binaries that you can just download and use.
   
   Download the latest TON mainnet configuration file from https://newton-blockchain.github.io/global.config.json.
 
-* **Send BOC to mainnet**
+### 3.4. Send BOC to mainnet
 
   Command line: `lite-client -C global.config.json -c 'sendfile <boc-file>'`
   
@@ -122,15 +122,15 @@ This computer should never be connected to the Internet, so all tools must be in
 
 ## Step 4: Sign transfer offline
 
-* **Ready `mywallet.pk`**
+### 4.1. Ready `mywallet.pk`
 
   The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `mywallet.pk` and save it. Never give any unauthorized party access to `mywallet.pk` as access to this file gives full access to all your funds. Rename this file for convenience to identify your wallet with a meaningful name (`mywallet` will be used as the name throughout this tutorial).
   
-* **Ready `mywallet.addr`**
+### 4.2. Ready `mywallet.addr`
 
   This file was generated in step 2 when the wallet contract deployment was created. You should have stored this file for future use. This file is not secret, so it does not need heavy protection. If you lost this file, repeat step 2 to create it again (just make sure to use the same arguments you used on the original execution, specifically the wallet ID and the workchain ID).
   
-* **Sign deployment**
+### 4.3. Sign deployment
 
   Command line: `fift -s wallet-v3.fif <wallet-filename-without-extension> <destination-address> <wallet-id> <seq-no> <ton-coin-amount> <boc-output-file> --timeout 86400`
   
@@ -159,21 +159,21 @@ This computer should never be connected to the Internet, so all tools must be in
   (Saved to file tx17.boc)
   ```
 
-* **See output BOC**
+### 4.4. See output BOC
 
   The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `tx17.boc` (or what name you chose for `boc-output-file` above).
 
 ## Step 5: Move BOC and send
 
-* **Move BOC**
+### 5.1. Move BOC
 
   The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `mywallet.pk`) get compromised in the process.
     
-* **Prepare `lite-client`**
+### 5.2. Prepare `lite-client`
 
   See explanation under step 3.
 
-* **Send BOC to mainnet**
+### 5.3. Send BOC to mainnet
 
   Command line: `lite-client -C global.config.json -c 'sendfile <boc-file>'`
   
