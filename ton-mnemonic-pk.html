@@ -21,8 +21,10 @@
         
         window.addEventListener("load", async ()=> {
             
-            document.querySelector('#load-btn').addEventListener('click', ()=> {
-                let text = document.querySelector('#words').value.split(' ');
+            document.querySelector('#load-btn').addEventListener('click', async () => {
+                let textRaw = document.querySelector('#words').value;
+                textRaw = textRaw.replaceAll('\n', ' ');
+                const text = textRaw.split(' ');
 
                 let anyWordIsNotInList = false;
                 let badWordIndex = -1;
@@ -43,6 +45,13 @@
                     document.querySelector('#dl').style.display = 'none';
                     return;
                 }
+
+                if (! await tonMnemonic.validateMnemonic(text)) {
+                    document.querySelector('#validation-error').innerText = 'Mnemonic error: checksum failed';
+                    document.querySelector('#dl').style.display = 'none';
+                    return;
+                }
+
                 loadMnemonic(text);
             });
             
@@ -104,23 +113,24 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>TON Offline Mnemonic Tool</h2>
-        <br>
-        <b>1.</b> Enter your 24 word mnemonic:
-        <br><br>
-        <textarea name="" id="words" cols="30" rows="10"></textarea>
-        <br>
-        or <button id="gen-seed-btn">Generate New Mnemonic</button>
-        <br>
-        <div id="validation-error"></div>
-        <br>
-        <b>2.</b> Convert 24 word mnemonic to private key (mywallet.pk):
-        <br><br>
-        <button id="load-btn">Convert mnemonic</button>
-        <br>
-        <div id="binary-data"></div>
-        <a href="" id="dl" download="mywallet.pk" style="display: none;">💾 Download private key</a>
-    </div>
-</body>
-</html>
+    <div class="container">            
+            <h2>TON Offline Mnemonic Tool</h2>
+            <br>
+            <b>1.</b> Enter your 24 word mnemonic:
+            <br><br>
+            <textarea name="" id="words" cols="30" rows="10"></textarea>
+            <br>
+            or <button id="gen-seed-btn">Generate New Mnemonic</button>
+            <br>
+            <div id="validation-error"></div>
+            <br>
+            <b>2.</b> Convert 24 word mnemonic to private key (mywallet.pk):
+            <br><br>
+            <button id="load-btn">Convert mnemonic</button>
+            <br>
+            <div id="binary-data"></div>
+            <a href="" id="dl" download="mywallet.pk" style="display: none;">💾 Download private key</a>
+        </div>
+    </body>
+    </html>
+    
