@@ -51,13 +51,13 @@ This computer should never be connected to the Internet, so all tools must be in
   
 * Sign deployment
 
-  Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <key.pk>`
+  Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <key.pk-without-extension>`
   
   * `workchain-id` - normally zero (0) as the wallet will reside on the basic workchain
   * `wallet-id` - any integer since multiple wallets can be deployed by the same key, the value `698983191` is used by standard wallets as the primary ID, using it will allow seamless import of the wallet into a third-party wallet app in the future
-  * `key.pk` - path to the private key file
+  * `key.pk` - path to the private key file without the `.pk` extension
   
-  Example: `fift -s new-wallet-v3.fif 0 698983191 key.pk`
+  Example: `fift -s new-wallet-v3.fif 0 698983191 key`
   
 * See output BOC
 
