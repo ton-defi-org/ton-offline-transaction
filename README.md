@@ -29,7 +29,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
 * Download `fift-lib` library
   
-  This dependency is a standard collection of about 8 fift files. They are part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download the files from https://github.com/newton-blockchain/ton/tree/master/crypto/fift/lib.
+  This dependency is a standard collection of about 8 fift files. They are part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download the files from https://github.com/newton-blockchain/ton/tree/master/crypto/fift/lib. Set the `fift-lib` directory as the environment variable `FIFTPATH` by running `export FIFTPATH=~/ton/fift-lib`. 
   
 * Download `wallet-v3.fif` and `new-wallet-v3.fif`
 
