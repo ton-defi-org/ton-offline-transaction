@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script src="js/index.js"></script>
+    <script src="tonweb-mnemonic.js"></script>
     <script>
         const tonMnemonic = window.TonWeb.mnemonic;
         async function loadMnemonic(text) {
@@ -33,13 +33,13 @@
                     }
                 })
                 if(anyWordIsNotInList) { 
-                    document.querySelector('#validation-error').innerText = `word: ${text[badWordIndex]} is not the word list`;
+                    document.querySelector('#validation-error').innerText = `Mnemonic error: word "${text[badWordIndex]}" is not in the word list`;
                     document.querySelector('#dl').style.display = 'none';
                     return;
                 }
                 
                 if( text.length !== 24) {
-                    document.querySelector('#validation-error').innerText = 'Number of words should be 24';
+                    document.querySelector('#validation-error').innerText = 'Mnemonic error: number of words should be 24';
                     document.querySelector('#dl').style.display = 'none';
                     return;
                 }
@@ -63,7 +63,7 @@
                 result += String.fromCharCode.apply(null, slice);
                 index += CHUNK_SIZE;
             }
-            document.querySelector('#binary-data').innerText = 'base64:'+btoa(result);
+            document.querySelector('#binary-data').innerText = 'Private Key (base64): '+btoa(result);
             document.querySelector('#validation-error').innerText = '';
             return btoa(result);
         }
@@ -105,17 +105,22 @@
 </head>
 <body>
     <div class="container">
-        <h2>Mnemonic Tool</h2>
+        <h2>TON Offline Mnemonic Tool</h2>
         <br>
-        <button id="gen-seed-btn">Generate Mnemonic</button>
-        <br>
+        <b>1.</b> Enter your 24 word mnemonic:
+        <br><br>
         <textarea name="" id="words" cols="30" rows="10"></textarea>
         <br>
-        <div id="validation-error"></div>
-        <div id="binary-data"></div>
-        <button id="load-btn">Load 24 word mnemonic</button>
+        or <button id="gen-seed-btn">Generate New Mnemonic</button>
         <br>
-        <a href="" id="dl" download="key.pk" style="display: none;">💾 download private key</a>
+        <div id="validation-error"></div>
+        <br>
+        <b>2.</b> Convert 24 word mnemonic to private key (mywallet.pk):
+        <br><br>
+        <button id="load-btn">Convert mnemonic</button>
+        <br>
+        <div id="binary-data"></div>
+        <a href="" id="dl" download="mywallet.pk" style="display: none;">💾 Download private key</a>
     </div>
 </body>
 </html>
