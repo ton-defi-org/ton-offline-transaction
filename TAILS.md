@@ -2,7 +2,7 @@
 
 ## Compiling ton executables
 
-If running into problems with running:
+If running into problems with these steps:
 
 ```
 sudo apt update
@@ -18,3 +18,7 @@ tor+http://deb.debian.org/debian/ buster main
 tor+http://security.debian.org/debian-security/ buster/updates main
 tor+http://deb.debian.org/debian/ buster-updates main
 ```
+
+Now run the steps above.
+
+Make sure to continue the rest of the non-sudo steps (starting with `git clone`) without `sudo` as the regular `amnesia` user.
