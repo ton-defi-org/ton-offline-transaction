@@ -7,6 +7,12 @@
             
             let pk = await tonMnemonic.mnemonicToSeed(text);
             let b64encoded = Uint8ToBase64(pk)
+
+            const forchecksum = await crypto.subtle.digest('SHA-256', pk);
+            const forchecksum16 = Array.from(new Uint16Array(forchecksum));
+            let checksum_word1 = tonMnemonic.wordlists.EN[forchecksum16[0] & 2047];
+            let checksum_word2 = tonMnemonic.wordlists.EN[forchecksum16[1] & 2047];
+            document.querySelector('#checksum').innerText = `Checksum: ${checksum_word1} ${checksum_word2}`;
             
             document.querySelector('#dl').href = `data:application/octet-stream;charset=utf-8;base64,${b64encoded}`;
             document.querySelector('#dl').style.display = 'block';
@@ -72,10 +78,14 @@
                 result += String.fromCharCode.apply(null, slice);
                 index += CHUNK_SIZE;
             }
-            document.querySelector('#binary-data').innerText = 'Private Key (base64): '+btoa(result);
+            
+            
+            
             document.querySelector('#validation-error').innerText = '';
             return btoa(result);
         }
+
+
     </script>
     <style>
         body {
@@ -104,6 +114,9 @@
             line-height: 2;
             min-height: 20px;
         }
+        #checksum {
+            line-height: 2;
+        }
         a {
             text-decoration:cornflowerblue;
         }
@@ -128,7 +141,7 @@
             <br><br>
             <button id="load-btn">Convert mnemonic</button>
             <br>
-            <div id="binary-data"></div>
+            <div id="checksum"></div>
             <a href="" id="dl" download="mywallet.pk" style="display: none;">💾 Download private key</a>
         </div>
     </body>
