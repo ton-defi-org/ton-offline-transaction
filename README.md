@@ -31,9 +31,9 @@ This computer should never be connected to the Internet, so all tools must be in
   
   This dependency is a standard collection of about 8 fift files. They are part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download the files from https://github.com/newton-blockchain/ton/tree/master/crypto/fift/lib. Set the `fift-lib` directory as the environment variable `FIFTPATH` by running `export FIFTPATH=~/ton/fift-lib`. 
   
-* Download `wallet-v3.fif` and `new-wallet-v3.fif`
+* Download `wallet-v3.fif`, `new-wallet-v3.fif` and `wallet-v3-code.fif`
 
-  The TON core team publishes the official template for a wallet smart contract. In the time of writing, the most recent version is wallet V3. The code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download [wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3.fif) and [new-wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/new-wallet-v3.fif) from https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont.
+  The TON core team publishes the official template for a wallet smart contract. In the time of writing, the most recent version is wallet V3. The code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Download [wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3.fif), [new-wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/new-wallet-v3.fif) and [wallet-v3-code.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3-code.fif) from https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont.
 
 * Build `tonweb-mnemonic.js` JS library
 
