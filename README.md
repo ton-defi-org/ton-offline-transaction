@@ -139,13 +139,13 @@ This computer should never be connected to the Internet, so all tools must be in
   * `destination-address` - the public wallet address you want to send TON coins to
   * `wallet-id` - the wallet ID used when the wallet was deployed, the value `698983191` is used by standard wallets as the primary ID
   * `seq-no` - the number of external transactions sent to the wallet, can be seen on a block explorer or checked via lite client (in an online computer) by running `lite-client -C global.config.json -c 'runmethod kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ seqno'` using the wallet public address
-  * `ton-coin-amount` - the decimal amount on TON coins to send, meaning `0.1` to send 0.1 TON
+  * `ton-coin-amount` - the decimal amount of TON coins to send, meaning `0.1` to send 0.1 TON, note that you cannot send the entire wallet balance and must leave around 0.01 TON in the wallet for gas
   * `boc-output-file` - the name of the output BOC file that will be created in the current directory
   * `timeout` - timeout in seconds for sending the BOC to mainnet (default is 60 seconds which is too low)
   
   Example: 
   ```
-  fift -s wallet-v3.fif mywallet EQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLIYI 698983191 17 0.03 tx17 --timeout 86400
+  fift -s wallet-v3.fif mywallet EQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLIYI 698983191 17 0.03 mywallet-tx17 --timeout 86400
   ```
   
   Example output:
@@ -156,12 +156,12 @@ This computer should never be connected to the Internet, so all tools must be in
   Transferring GR$0.03 to account kQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLD2C = 0:eb8da2da84b90c07e84c0a69333b206e1c9d77f5951898f1eee91441
   ...
   Query expires in 86400 seconds
-  (Saved to file tx17.boc)
+  (Saved to file mywallet-tx17.boc)
   ```
 
 ### 4.4. See output BOC
 
-  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `tx17.boc` (or what name you chose for `boc-output-file` above).
+  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `mywallet-tx17.boc` (or what name you chose for `boc-output-file` above).
 
 ## Step 5: Move BOC and send
 
@@ -182,7 +182,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
   Example: 
   ```
-  lite-client -C global.config.json -c 'sendfile tx17.boc'
+  lite-client -C global.config.json -c 'sendfile mywallet-tx17.boc'
   ```
   
   Example output:
@@ -192,6 +192,6 @@ This computer should never be connected to the Internet, so all tools must be in
   [ 2][t 1][2022-03-28 11:18:26.203706][lite-client.cpp:363][!testnode]	server version is 1.1, capabilities 7
   [ 3][t 1][2022-03-28 11:18:26.203748][lite-client.cpp:372][!testnode]	server time is 1648466306 (delta 0)
   ...
-  [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file tx17.boc
+  [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file mywallet-tx17.boc
   [ 3][t 1][2022-03-28 11:18:26.261124][lite-client.cpp:1160][!testnode]	external message status is 1
   ```
