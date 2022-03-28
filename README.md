@@ -10,14 +10,14 @@ This is often achieved through the use of hardware wallets (like Trezor and Ledg
 
 #### Setup offline wallet
 
-1. **Setup offline computer** - this special computer will hold your TON private key and should never be connected to the Internet
-2. **Sign deployment offline** - use the offline computer to sign a new transaction for deploying the TON wallet contract (create BOC file)
-3. **Move BOC and send** - move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
+1. **Setup offline computer**<br>This special computer will hold your TON private key and should never be connected to the Internet
+2. **Sign deployment offline**<br>Use the offline computer to sign a new transaction for deploying the wallet contract (create BOC file)
+3. **Move BOC and send**<br>Move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
 
-#### Sending TON coins
+#### Send TON coins
 
-4. **Sign transfer offline** - use the offline computer to sign a new send transaction for sending TON coins (create BOC file)
-5. **Move BOC and send** - move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
+4. **Sign transfer offline**<br>Use the offline computer to sign a new transaction for sending TON coins (create BOC file)
+5. **Move BOC and send**<br>Move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
 
 ## Step 1: Setup offline computer
 
