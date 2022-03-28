@@ -57,7 +57,20 @@ This computer should never be connected to the Internet, so all tools must be in
   * `wallet-id` - any integer since multiple wallets can be deployed by the same key, the value `698983191` is used by standard wallets as the primary ID, using it will allow seamless import of the wallet into a third-party wallet app in the future
   * `key.pk` - path to the private key file without the `.pk` extension
   
-  Example: `fift -s new-wallet-v3.fif 0 698983191 key`
+  Example: 
+  ```
+  fift -s new-wallet-v3.fif 0 698983191 key
+  ```
+  
+  Example output:
+  ```
+  Creating new advanced v3 wallet in workchain 0
+  with unique wallet id 698983191
+  Loading private key from file key.pk
+  ...
+  Bounceable address (for later access): kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ
+  ```
+  The wallet public address in the example output is `kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ`
   
 * See output BOC
 
