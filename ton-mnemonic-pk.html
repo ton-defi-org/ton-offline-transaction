@@ -5,18 +5,44 @@
         const tonMnemonic = window.TonWeb.mnemonic;
         async function loadMnemonic(text) {
             
-            
             let pk = await tonMnemonic.mnemonicToSeed(text);
             let b64encoded = Uint8ToBase64(pk)
             
             document.querySelector('#dl').href = `data:application/octet-stream;charset=utf-8;base64,${b64encoded}`;
             document.querySelector('#dl').style.display = 'block';
         }
+
+        function isWordInList(word) {
+            let foundArr = tonMnemonic.wordlists.EN.filter((it)=> {
+                return it == word;
+            })
+            return foundArr.length > 0;
+        }
         
         window.addEventListener("load", async ()=> {
             
             document.querySelector('#load-btn').addEventListener('click', ()=> {
                 let text = document.querySelector('#words').value.split(' ');
+
+                let anyWordIsNotInList = false;
+                let badWordIndex = -1;
+                text.forEach( (it, i)=> {
+                    if(!isWordInList(it)) {
+                        anyWordIsNotInList = true;
+                        badWordIndex = i;
+                    }
+                })
+                if(anyWordIsNotInList) { 
+                    document.querySelector('#validation-error').innerText = `word: ${text[badWordIndex]} is not the word list`;
+                    document.querySelector('#dl').style.display = 'none';
+                    return;
+                }
+                
+                if( text.length !== 24) {
+                    document.querySelector('#validation-error').innerText = 'Number of words should be 24';
+                    document.querySelector('#dl').style.display = 'none';
+                    return;
+                }
                 loadMnemonic(text);
             });
             
@@ -37,6 +63,8 @@
                 result += String.fromCharCode.apply(null, slice);
                 index += CHUNK_SIZE;
             }
+            document.querySelector('#binary-data').innerText = 'base64:'+btoa(result);
+            document.querySelector('#validation-error').innerText = '';
             return btoa(result);
         }
     </script>
@@ -44,6 +72,7 @@
         body {
             padding: 20px;
             font-size: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
         button {
             border: 1px solid rgb(105, 105, 105);
@@ -55,20 +84,38 @@
             max-width: 800px;
             margin: 10px auto;
         }
+
+        #validation-error {
+            color:red;
+            line-height: 2;
+            min-height: 40px;
+        }
+        #binary-data {
+            font-size: 14px;
+            line-height: 2;
+            min-height: 20px;
+        }
+        a {
+            text-decoration:cornflowerblue;
+        }
+        a:hover {
+            text-decoration:underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Mnemonic Tool</h2>
-
         <br>
         <button id="gen-seed-btn">Generate Mnemonic</button>
         <br>
         <textarea name="" id="words" cols="30" rows="10"></textarea>
         <br>
+        <div id="validation-error"></div>
+        <div id="binary-data"></div>
         <button id="load-btn">Load 24 word mnemonic</button>
         <br>
-        <a href="" id="dl" download="key.pk" style="display: none;">download private key</a>
+        <a href="" id="dl" download="key.pk" style="display: none;">💾 download private key</a>
     </div>
 </body>
 </html>
