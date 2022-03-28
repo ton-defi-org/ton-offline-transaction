@@ -16,8 +16,8 @@ This is often achieved through the use of hardware wallets (like Trezor and Ledg
 
 #### Sending TON coins
 
-4. If you want to send TON coins, go to the offline computer and sign a new send transaction (generate a BOC file).
-5. Move the BOC file to a different online computer (via USB-Key, QR code, etc) and transmit it to TON mainnet using a lite client.
+4. **Sign transfer offline** - use the offline computer to sign a new send transaction for sending TON coins (create BOC file)
+5. **Move BOC and send** - move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
 
 ## Step 1: Setup offline computer
 
@@ -41,46 +41,51 @@ This computer should never be connected to the Internet, so all tools must be in
 
 * **Download `ton-mnemonic-pk.html`**
 
-  This offline HTML relies on `tonweb-mnemonic.js` and provides an easy-to-use interface where you can convert an existing 24 word mnemonic (BIP39) to a TON-compatible private key file (`key.pk`). The private key file (`key.pk`) is needed as argument to `fift` executable for signing transactions. The HTML is part of this repo and can be downloaded [here](ton-mnemonic-pk.html).
+  This offline HTML relies on `tonweb-mnemonic.js` and provides an easy-to-use interface where you can convert an existing 24 word mnemonic (BIP39) to a 32-byte TON-compatible private key file (`mywallet.pk`). The private key file (`mywallet.pk`) is needed as argument to `fift` executable for signing transactions. The HTML is part of this repo and can be downloaded [here](ton-mnemonic-pk.html).
 
 ## Step 2: Sign deployment offline
 
-* **Ready `key.pk`**
+* **Ready `mywallet.pk`**
 
-  The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `key.pk` and save it. Never give any unauthorized party access to `key.pk` as access to this file gives full access to all your funds.
+  The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `mywallet.pk` and save it. Never give any unauthorized party access to `mywallet.pk` as access to this file gives full access to all your funds. Rename this file for convenience to identify your wallet with a meaningful name (`mywallet` will be used as the name throughout this tutorial).
   
 * **Sign deployment**
 
-  Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <key-file-without-extension>`
+  Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <wallet-filename-without-extension>`
   
+  * `new-wallet-v3.fif` - the template for the wallet smart contract downloaded earlier
   * `workchain-id` - normally zero (0) as the wallet will reside on the basic workchain
   * `wallet-id` - any integer since multiple wallets can be deployed by the same key, the value `698983191` is used by standard wallets as the primary ID, using it will allow seamless import of the wallet into a third-party wallet app in the future
-  * `key-file-without-extension` - path to the private key file without the `.pk` extension (`key.pk` will be just `key`)
+  * `wallet-filename-without-extension` - path to the private key file without the `.pk` extension (`mywallet.pk` will be just `mywallet`)
   
   Example: 
   ```
-  fift -s new-wallet-v3.fif 0 698983191 key
+  fift -s new-wallet-v3.fif 0 698983191 mywallet
   ```
   
   Example output:
   ```
   Creating new advanced v3 wallet in workchain 0
   with unique wallet id 698983191
-  Loading private key from file key.pk
+  Loading private key from file mywallet.pk
   ...
   Bounceable address (for later access): kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ
   ```
   The public wallet address in the example output is `kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ`
-  
+
+* **Save `mywallet.addr`**
+
+  The above command will generate an ADDR file which contains the public wallet address. The ADDR file will be created in the current directory with the name `mywallet.addr` (or any other meaningful name you chose for `wallet-filename-without-extension` above). Store the ADDR file for future use, it will be required for signing transfer transactions. This file is not secret, so it does not need heavy protection.
+
 * **See output BOC**
 
-  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `key-query.boc`.
+  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `mywallet-query.boc` (or any other meaningful name you chose for `wallet-filename-without-extension` above).
   
 ## Step 3: Move BOC and send
 
 * **Move BOC**
 
-  The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `key.pk`) get compromised in the process.
+  The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `mywallet.pk`) get compromised in the process.
   
 * **Fund address**
 
@@ -94,14 +99,14 @@ This computer should never be connected to the Internet, so all tools must be in
 
 * **Send BOC to mainnet**
 
-  Command line: `lite-client -C <global.config.json> -c 'sendfile <boc-file>'`
+  Command line: `lite-client -C global.config.json -c 'sendfile <boc-file>'`
   
   * `global.config.json` - TON mainnet configuration file downloaded earlier
   * `boc-file` - path to the BOC file to send
   
   Example: 
   ```
-  lite-client -C global.config.json -c 'sendfile key-query.boc'
+  lite-client -C global.config.json -c 'sendfile mywallet-query.boc'
   ```
   
   Example output:
@@ -111,27 +116,82 @@ This computer should never be connected to the Internet, so all tools must be in
   [ 2][t 1][2022-03-28 11:18:26.203706][lite-client.cpp:363][!testnode]	server version is 1.1, capabilities 7
   [ 3][t 1][2022-03-28 11:18:26.203748][lite-client.cpp:372][!testnode]	server time is 1648466306 (delta 0)
   ...
-  [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file key-query.boc
+  [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file mywallet-query.boc
   [ 3][t 1][2022-03-28 11:18:26.261124][lite-client.cpp:1160][!testnode]	external message status is 1
   ```
 
-#### perquisites
+## Step 4: Sign transfer offline
 
-1. `fift` executable you can download fift from releases
-2. set env variable by running `export FIFTPATH=bin/fift-lib` (copied from [ton](https://github.com/newton-blockchain/ton) repository)
-3. [wallet-v3.fif](https://github.com/newton-blockchain/ton/blob/master/crypto/smartcont/wallet-v3.fif) - this file is a CLI tool which generates the **.boc** file
-4. private key file <pkfile.pk> ( below there is a description how to use the html file to convert 24 word mnmeonic to priave key file)
+* **Ready `mywallet.pk`**
 
-#### Generating a Private key file using mnemonic
-1. Open Tor Browser , navigate to mnemonic2pk.html (offline mode)
-2. insert the 24 word mnemonic
-3. click download button (private.pk) 
+  The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `mywallet.pk` and save it. Never give any unauthorized party access to `mywallet.pk` as access to this file gives full access to all your funds. Rename this file for convenience to identify your wallet with a meaningful name (`mywallet` will be used as the name throughout this tutorial).
+  
+* **Ready `mywallet.addr`**
 
-#### Build Boc
-1. run the command `fift -s wallet-v3.fif <pk_file> <destination_address> <sub_wallet_id> <seq_no> <ton_amounr(decimal)> <boc_output_file>`
-2. copy boc file to a computer with network access 
+  This file was generated in step 2 when the wallet contract deployment was created. You should have stored this file for future use. This file is not secret, so it does not need heavy protection. If you lost this file, repeat step 2 to create it again (just make sure to use the same arguments you used on the original execution, specifically the wallet ID and the workchain ID).
+  
+* **Sign deployment**
 
+  Command line: `fift -s wallet-v3.fif <wallet-filename-without-extension> <destination-address> <wallet-id> <seq-no> <ton-coin-amount> <boc-output-file> --timeout 86400`
+  
+  * `wallet-v3.fif` - the template for the wallet smart contract downloaded earlier
+  * `wallet-filename-without-extension` - path to the private key file without the `.pk` extension and the address file without the `.addr` extension (`mywallet.pk` and `mywallet.addr` will be just `mywallet`)
+  * `destination-address` - the public wallet address you want to send TON coins to
+  * `wallet-id` - the wallet ID used when the wallet was deployed, the value `698983191` is used by standard wallets as the primary ID
+  * `seq-no` - the number of external transactions sent to the wallet, can be seen on a block explorer or checked via lite client (in an online computer) by running `lite-client -C global.config.json -c 'runmethod kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ seqno'` using the wallet public address
+  * `ton-coin-amount` - the decimal amount on TON coins to send, meaning `0.1` to send 0.1 TON
+  * `boc-output-file` - the name of the output BOC file that will be created in the current directory
+  * `timeout` - timeout in seconds for sending the BOC to mainnet (default is 60 seconds which is too low)
+  
+  Example: 
+  ```
+  fift -s wallet-v3.fif mywallet EQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLIYI 698983191 17 0.03 tx17 --timeout 86400
+  ```
+  
+  Example output:
+  ```
+  Source wallet address = 0:697c29a97efc9b8a608a32a60e52f2e6ba8635d55af25e17668ec3fc311bc03b
+  kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ
+  Loading private key from file mywallet.pk
+  Transferring GR$0.03 to account kQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLD2C = 0:eb8da2da84b90c07e84c0a69333b206e1c9d77f5951898f1eee91441
+  ...
+  Query expires in 86400 seconds
+  (Saved to file tx17.boc)
+  ```
 
-#### deploy boc file from a computer with network
+* **See output BOC**
 
-- run `./lite-client -C global.config.json -c 'sendfile boc_output_file.boc'` and verify using a block explorer
+  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `tx17.boc` (or what name you chose for `boc-output-file` above).
+
+## Step 5: Move BOC and send
+
+* **Move BOC**
+
+  The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `mywallet.pk`) get compromised in the process.
+    
+* **Prepare `lite-client`**
+
+  See explanation under step 3.
+
+* **Send BOC to mainnet**
+
+  Command line: `lite-client -C global.config.json -c 'sendfile <boc-file>'`
+  
+  * `global.config.json` - TON mainnet configuration file downloaded earlier
+  * `boc-file` - path to the BOC file to send
+  
+  Example: 
+  ```
+  lite-client -C global.config.json -c 'sendfile tx17.boc'
+  ```
+  
+  Example output:
+  ```
+  using liteserver 6 with addr [51.195.176.148:4194]
+  [ 1][t 1][2022-03-28 11:18:26.184795][lite-client.h:362][!testnode]	conn ready
+  [ 2][t 1][2022-03-28 11:18:26.203706][lite-client.cpp:363][!testnode]	server version is 1.1, capabilities 7
+  [ 3][t 1][2022-03-28 11:18:26.203748][lite-client.cpp:372][!testnode]	server time is 1648466306 (delta 0)
+  ...
+  [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file tx17.boc
+  [ 3][t 1][2022-03-28 11:18:26.261124][lite-client.cpp:1160][!testnode]	external message status is 1
+  ```
