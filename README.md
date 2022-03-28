@@ -10,9 +10,9 @@ This is often achieved through the use of hardware wallets (like Trezor and Ledg
 
 #### Setup offline wallet
 
-1. Setup a special offline computer - this computer will hold your TON private key and should never be connected to the Internet.
-2. To deploy your TON wallet contract, go to the offline computer and sign the deploy transaction (generate a BOC file).
-3. Move the BOC file to a different online computer (via USB-Key, QR code, etc) and transmit it to TON mainnet using a lite client.
+1. **Setup offline computer** - this special computer will hold your TON private key and should never be connected to the Internet
+2. **Sign deployment offline** - use the offline computer to sign a new transaction for deploying the TON wallet contract (create BOC file)
+3. **Move BOC and send** - move the BOC file to a different online computer and transmit it to TON mainnet using a lite client
 
 #### Sending TON coins
 
@@ -42,6 +42,34 @@ This computer should never be connected to the Internet, so all tools must be in
 * Download `ton-mnemonic-pk.html`
 
   This offline HTML relies on `tonweb-mnemonic.js` and provides an easy-to-use interface where you can convert an existing 24 word mnemonic (BIP39) to a TON-compatible private key file (`key.pk`). The private key file (`key.pk`) is needed as argument to `fift` executable for signing transactions. The HTML is part of this repo and can be downloaded [here](ton-mnemonic-pk.html).
+
+## Step 2: Sign deployment offline
+
+* Ready `key.pk`
+
+  The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `key.pk` and save it. Never give any unauthorized party access to `key.pk` as access to this file gives full access to all your funds.
+  
+* Sign deployment
+
+  Command line: `fift -s new-wallet-v3.fif <workchain-id> <wallet-id> <key.pk>`
+  
+  * `workchain-id` - normally zero (0) as the wallet will reside on the basic workchain
+  * `wallet-id` - any integer since multiple wallets can be deployed by the same key, the value `698983191` is used by standard wallets as the primary ID, using it will allow seamless import of the wallet into a third-party wallet app in the future
+  * `key.pk` - path to the private key file
+  
+  Example: `fift -s new-wallet-v3.fif 0 698983191 key.pk`
+  
+* See output BOC
+
+  The above command will generate a BOC file which contains the signed transaction for transmission to TON mainnet. The BOC file will be created in the current directory with the name `key-query.boc`.
+  
+## Step 3: Move BOC and send
+
+* Move BOC
+
+  The output BOC should be moved to a regular (online) computer that is connected to the Internet. It is your responsibility to move it securely using any method like a USB-Key or QR code reader and make sure that no other important files (like `key.pk`) get compromised in the process.
+  
+* 
 
 #### perquisites
 
