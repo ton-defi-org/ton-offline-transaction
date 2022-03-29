@@ -130,7 +130,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
 ### 3.3. Prepare `lite-client`
 
-  The lite client command line tool is another part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=lite-client) or find a trusted source for [pre-built binaries](https://github.com/ton-defi-org/ton-binaries) that you can just download and use.
+  The lite client command line tool is another part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=lite-client) or find a trusted source for [pre-built binaries](https://github.com/ton-defi-org/ton-binaries) that you can just download and use. If you download a pre-built binary, make sure it's executable by running `chmod +x lite-client`.
   
   Download the latest TON mainnet configuration file from https://newton-blockchain.github.io/global.config.json.
 
