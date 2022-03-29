@@ -25,7 +25,7 @@ This computer should never be connected to the Internet, so all tools must be in
 
 ### 1.1. Build `fift` executable
 
-  This command line tool is part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=fift) or find a trusted source for [pre-built binaries](https://github.com/ton-defi-org/ton-binaries) that you can just download and use.
+  This command line tool is part of the TON toolchain. Its source code is part of the official [TON repo](https://github.com/newton-blockchain/ton/). Build it from source code by following the [official instructions](https://ton.org/docs/#/compile?id=fift) or find a trusted source for [pre-built binaries](https://github.com/ton-defi-org/ton-binaries) that you can just download and use. If you download a pre-built binary, make sure it's executable by running `chmod +x fift`.
   
   Example:
   ```
@@ -97,7 +97,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
   Example: 
   ```
-  fift -s new-wallet-v3.fif 0 698983191 mywallet
+  ./fift -s new-wallet-v3.fif 0 698983191 mywallet
   ```
   
   Example output:
@@ -149,7 +149,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
   Example: 
   ```
-  lite-client -C global.config.json -c 'sendfile mywallet-query.boc'
+  ./lite-client -C global.config.json -c 'sendfile mywallet-query.boc'
   ```
   
   Example output:
@@ -188,7 +188,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
   Example: 
   ```
-  fift -s wallet-v3.fif mywallet EQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLIYI 698983191 17 0.03 mywallet-tx17 --timeout 86400
+  ./fift -s wallet-v3.fif mywallet EQDrjaLahLkMB-hMCmkzOyBuHJ139ZUYmPHu6RRBKnbdLIYI 698983191 17 0.03 mywallet-tx17 --timeout 86400
   ```
   
   Example output:
@@ -225,7 +225,7 @@ This computer should never be connected to the Internet, so all tools must be in
   
   Example: 
   ```
-  lite-client -C global.config.json -c 'sendfile mywallet-tx17.boc'
+  ./lite-client -C global.config.json -c 'sendfile mywallet-tx17.boc'
   ```
   
   Example output:
