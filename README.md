@@ -1,4 +1,4 @@
-# Send Offline Transactions for TON Blockchain
+# Send offline transactions for TON blockchain
 
 ## Why?
 
