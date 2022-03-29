@@ -162,6 +162,8 @@ This computer should never be connected to the Internet, so all tools must be in
   [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file mywallet-query.boc
   [ 3][t 1][2022-03-28 11:18:26.261124][lite-client.cpp:1160][!testnode]	external message status is 1
   ```
+  
+  You can verify that the wallet contract was indeed deployed by using a TON block explorer such as TonWhales: https://tonwhales.com/explorer/address/kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ (replace the address in the link with your public wallet address that appeared in step 2).
 
 ## Step 4: Sign transfer offline
 
@@ -238,3 +240,5 @@ This computer should never be connected to the Internet, so all tools must be in
   [ 1][t 1][2022-03-28 11:18:26.243543][lite-client.cpp:1150][!testnode]	sending query from file mywallet-tx17.boc
   [ 3][t 1][2022-03-28 11:18:26.261124][lite-client.cpp:1160][!testnode]	external message status is 1
   ```
+  
+  You can verify that the tokens were indeed transferred by using a TON block explorer such as TonWhales: https://tonwhales.com/explorer/address/kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ (replace the address in the link with your public wallet address that appeared in step 2).
