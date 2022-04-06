@@ -10,9 +10,15 @@
 
         
         function generateQR(el, data) {
+            if(data.length < 100) {
+                alert('Invalid boc file size, a valid boc should be greater than 100 bytes');
+                return
+            }
             data = data.replace('data:application/octet-stream;base64,','');
             new QRCode(el, data);
             document.querySelector('#base64').innerHTML = data;
+            document.querySelector('#base64').style.display = 'block';
+            document.querySelector('#hint').style.display = 'none';
         }
 
         window.onload = function() {
@@ -31,6 +37,10 @@
                 fr.onload = function (e) {
                     generateQR(qrEl, e.target.result);
                 }
+                if(e.target.files['0'].name.indexOf('.boc') == -1 ) {
+                    alert('Invalid boc file, please load a file with *.boc extention');
+                    return;
+                }
                 //todo validate filename *.boc
                 let file = document.querySelector('#file-upload');
                 fr.readAsDataURL(file.files[0]);
@@ -42,24 +52,46 @@
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             width: 480px;
             line-height: 4;
-            font-size: 24px;
+            font-size: 20px;
             margin: 50px auto;
             height: 100vh;
         }
 
         .hint {
             font-size: 24px;
-            position: fixed;
-            top: 65%;
+            position: absolute;
+            top: 35%;
             left: 40%;
             color: #ccc;
         }
 
         #file-upload {
-            position: fixed;
+            position: absolute;
             height: 100%;
             width: 100%;
-            opacity: 0.2;
+            opacity: 0;
+        }
+        .btn {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 7px 13px;
+            cursor: pointer;
+            background-color: #3ca4db;
+            color: #fff;
+            border-radius: 7px;
+            font-size: 12px;
+            line-height: 1.5;
+            width: 114px;
+            margin: 0 auto;
+            margin-left: 120px;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+        #qrcode {
+            margin: 0 auto;
+            width: 355px;
         }
     </style>
 </head>
@@ -67,11 +99,11 @@
     <div id="hint" class="hint">Drag Boc Here</div>
     <input id="file-upload" type="file" class='file'></input>    
     <label htmlFor="file-upload" class="btn">
-        <i class="fa fa-cloud-upload"></i> BOC File
+        📁 Upload BOC File 
     </label>
     <div id="qrcode"></div>
     <br>
   
-    <textarea id="base64"  rows="4" cols="50"></textarea>
+    <textarea style="display: none;" id="base64"  rows="4" cols="50"></textarea>
 </body>
 </html>
