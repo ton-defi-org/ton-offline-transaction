@@ -82,6 +82,8 @@ This computer should never be connected to the Internet, so all tools must be in
 
 ## Step 2: Sign deployment offline
 
+Make sure offline computer date/time is correct, otherwise all transactions will be expired. 
+
 ### 2.1. Ready `mywallet.pk`
 
   The primary secret stored on the offline computer is the private key file. If you only have a 24 word mnemonic (BIP39), open `ton-mnemonic-pk.html` using a web browser (offline), type the mnemonic into the page and use it to generate `mywallet.pk` and save it. Never give any unauthorized party access to `mywallet.pk` as access to this file gives full access to all your funds. Rename this file for convenience to identify your wallet with a meaningful name (`mywallet` will be used as the name throughout this tutorial).
@@ -166,6 +168,8 @@ This computer should never be connected to the Internet, so all tools must be in
   You can verify that the wallet contract was indeed deployed by using a TON block explorer such as TonWhales: https://tonwhales.com/explorer/address/kQBpfCmpfvybimCKMqYOUvLmuoY11VryXhdmjsP8MRvAO6SJ (replace the address in the link with your public wallet address that appeared in step 2).
 
 ## Step 4: Sign transfer offline
+
+Make sure offline computer date/time is correct, otherwise all transactions will be expired.
 
 ### 4.1. Ready `mywallet.pk`
 
