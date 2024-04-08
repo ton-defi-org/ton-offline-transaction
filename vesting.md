@@ -6,7 +6,7 @@
 - private key file <mywallet.pk> generated previously using ton-mnemonic-pk.html
 - <destination> address - where you want to send funds to 
 - <ton_amount> - amount of TONs to send
-- <seqno> - vesting wallets seqno (documented below)  
+- < seqno > - vesting wallets seqno (documented below)  
 
 
 ## get seqno <seqno>
