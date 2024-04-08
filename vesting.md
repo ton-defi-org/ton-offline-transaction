@@ -12,9 +12,13 @@
 ## get seqno <seqno>
 Get Current SeqNo for vesting Wallet
 To sign the message, you must input the correct seqno of the signer otherwise it’s invalid.
-Please get the seqno by visiting (on a regular device) https://tonwhales.com/explorer/address/<wallet_address>
+Please get the seqno by visiting (on a regular device) https://verifier.ton.org/<wallet_address>
+go to Getters tab and run `seqno()` method to get the current seqno of the wallet (<seqno>).
+
+or use a curl 
+vesting_contract_address_decimals_format = 0:b21c74F113C504144d25BEC6FFA5089ED79a2d6f //use this tool https://ton.org/address
 ```
-curl -X 'GET' \ 'https://toncenter.com/api/v2/getWalletInformation?address=<wallet_address>' \ -H 'accept: application/json'
+curl 'https://ton.access.orbs.network/b21c74F113C504144d25BEC6FFA5089ED79a2d6f/1/mainnet/toncenter-api-v2/jsonRPC'   -H 'x-ton-client-version: 11.19.0'   --data-raw '{"id":"1","jsonrpc":"2.0","method":"runGetMethod","params":{"address":"<vesting_contract_address_decimals_format>","method":"seqno","stack":[]}}'   --compressed
 ```
 
 
