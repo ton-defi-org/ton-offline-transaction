@@ -1,0 +1,4 @@
+*.pk
+*.addr
+*.boc
+global.config.json
