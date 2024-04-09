@@ -31,7 +31,7 @@ this operation will create mywallet.addr file
 
 Example: 
   ```
-  ./fift -s wallet-v3.fif mywallet <vesting_contract_address> 698983191 <seqno> <ton_amount> boc-query --timeout 86400
+  ./fift -s wallet-v3.fif mywallet <vesting_contract_address> 268 <seqno> <ton_amount> boc-query --timeout 86400
   ```
 
 ## Publish the boc using QR code 
