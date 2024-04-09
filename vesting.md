@@ -1,4 +1,4 @@
-# Using Vesting Contact on a black computer 
+# Using Vesting Contract on a black computer (air-gapped) WalletV3 and WalletV4 support
 
 
 ## What you need 
@@ -7,6 +7,7 @@
 - <destination> address - where you want to send funds to 
 - <ton_amount> - amount of TONs to send
 - < seqno > - vesting wallets seqno (documented below)  
+- wallet version - depends on the wallet version you are using, in this example we are using wallet-v3.fif but you can use wallet-v4.fif .
 
 
 ## get seqno <seqno>
