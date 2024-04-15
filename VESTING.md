@@ -4,7 +4,7 @@
 ## What you need 
 - A vesting contract address <vesting_contract_address>
 - private key file <mywallet.pk> generated previously using ton-mnemonic-pk.html
-- <destination> address - where you want to send funds to 
+- <destination_address> - where you want to send funds to 
 - <ton_amount> - amount of TONs to send
 - < seqno > - vesting wallets seqno (documented below)  
 - wallet version - depends on the wallet version you are using, in this example we are using wallet-v3.fif but you can use wallet-v4.fif .
@@ -29,11 +29,17 @@ in order to generate .addr file use this command , the *vesting_contract_address
 this operation will create mywallet.addr file 
 
 ## Use Simple Transfer with newly generated .addr file and the private key file
+ 
+```
+./fift -s wallet-v3.fif mywallet <destination_address> 268 <seqno> <ton_amount> boc-query --timeout 86400
+```
 
-Example: 
-  ```
-  ./fift -s wallet-v3.fif mywallet <vesting_contract_address> 268 <seqno> <ton_amount> boc-query --timeout 86400
-  ```
+Example:
+
+```
+./fift -s wallet-v3.fif mywallet 
+UQCZ3CmthhVRIciwzpt1VC0XFPBrP6QvVHLZe_Ydx46QSHGU 268 0 3 boc-query --timeout 86400
+```
 
 ## Publish the boc using QR code 
 1. open boc-to-qr.html in a browser
