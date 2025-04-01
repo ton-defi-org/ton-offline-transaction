@@ -3,7 +3,7 @@
 
 ## What you need 
 - A vesting contract address <vesting_contract_address>
-- private key file <mywallet.pk> generated previously using ton-mnemonic-pk.html
+- private key file `mywallet.pk` generated previously using ton-mnemonic-pk.html
 - <destination_address> - where you want to send funds to 
 - <ton_amount> - amount of TONs to send
 - < seqno > - vesting wallets seqno (documented below)  
@@ -26,7 +26,7 @@ curl 'https://ton.access.orbs.network/b21c74F113C504144d25BEC6FFA5089ED79a2d6f/1
 ## Generate .addr file for vesting account
 in order to generate .addr file use this command , the *vesting_contract_address* is the address of the vesting contract.
 `fift -s str-to-addr.fif <vesting_contract_address>`
-this operation will create mywallet.addr file 
+this operation will create `mywallet.addr` file 
 
 ## Use Simple Transfer with newly generated .addr file and the private key file
  
@@ -39,6 +39,13 @@ Example:
 ```
 ./fift -s wallet-v3.fif mywallet 
 UQCZ3CmthhVRIciwzpt1VC0XFPBrP6QvVHLZe_Ydx46QSHGU 268 0 3 boc-query --timeout 86400
+```
+
+Example with transfer memo "hello":
+
+```
+./fift -s wallet-v3.fif mywallet 
+UQCZ3CmthhVRIciwzpt1VC0XFPBrP6QvVHLZe_Ydx46QSHGU 268 1 3 boc-query --comment hello --timeout 86400
 ```
 
 ## Publish the boc using QR code 
