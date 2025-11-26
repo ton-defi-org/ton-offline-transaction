@@ -24,7 +24,7 @@
                 return
             }
             data = data.replace('data:application/octet-stream;base64,','');
-            data = "https://ipfs.io/ipfs/QmdhmN4Ux1ucGGjM3AtuPLwiBrMzU5FWfviZH33d49z524#,"+data;
+            data = "https://ipfs.io/ipfs/QmdhmN4Ux1ucGGjM3AtuPLwiBrMzU5FWfviZH33d49z524#"+data;
             console.log(data);
             new QRCode(el, data);
             document.querySelector('#hex').innerHTML = base64ToHex(data);
